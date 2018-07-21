@@ -1,5 +1,6 @@
 package com.smarttersstudio.jtern;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.support.annotation.NonNull;
@@ -82,7 +83,12 @@ public class ApplyActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if(requestCode==1){
-
+                final ProgressDialog progressDialog=new ProgressDialog(this);
+                progressDialog.setTitle("please wait");
+                progressDialog.setMessage("Please wait while we are uploading your document..");
+                progressDialog.setCanceledOnTouchOutside(false);
+                progressDialog.setCancelable(false);
+                progressDialog.show();
                 final String sub=subList.getSelectedItem().toString();
                 uploadButton.setEnabled(false);
                 uploadButton.setText("Please Wait");
@@ -93,6 +99,7 @@ public class ApplyActivity extends AppCompatActivity {
                     public void onFailure(@NonNull Exception e) {
                         Toast.makeText(ApplyActivity.this,e.getMessage(), Toast.LENGTH_SHORT).show();
                         uploadButton.setText("Upload");
+                        progressDialog.dismiss();
                         uploadButton.setEnabled(true);
                     }
                 }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
@@ -101,6 +108,7 @@ public class ApplyActivity extends AppCompatActivity {
                         String url=taskSnapshot.getDownloadUrl().toString();
                         FirebaseDatabase.getInstance().getReference().child(sub).child(uid).child("url").setValue(url);
                         Toast.makeText(ApplyActivity.this, "CV Successfully submitted..", Toast.LENGTH_SHORT).show();
+                        progressDialog.dismiss();
                         finish();
                     }
                 });
