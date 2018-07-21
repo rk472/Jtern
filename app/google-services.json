@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "962709124238",
+    "firebase_url": "https://jtern-41853.firebaseio.com",
+    "project_id": "jtern-41853",
+    "storage_bucket": "jtern-41853.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:962709124238:android:7a32e61ce48e6052",
+        "android_client_info": {
+          "package_name": "com.smarttersstudio.jtern"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "962709124238-je2b8gv33p1lcl8lk11885249u0hqcrq.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.smarttersstudio.jtern",
+            "certificate_hash": "0a0a24921c5f55a18cd40b33d7d4043249d794be"
+          }
+        },
+        {
+          "client_id": "962709124238-ghupajr29rr2k7os1t0qntiiukoiuhmf.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDlLMBl343Nl58PZwBuBSg69_5OV75jwuQ"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "962709124238-ghupajr29rr2k7os1t0qntiiukoiuhmf.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
