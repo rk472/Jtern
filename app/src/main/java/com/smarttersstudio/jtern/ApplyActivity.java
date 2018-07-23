@@ -51,7 +51,7 @@ public class ApplyActivity extends AppCompatActivity {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         if(dataSnapshot.hasChild(uid)){
-                            uploadButton.setText("Submitted...");
+                            uploadButton.setText("Submited...");
                         }else{
                             uploadButton.setEnabled(true);
                             uploadButton.setText("Upload");
