@@ -51,7 +51,7 @@ public class ApplyActivity extends AppCompatActivity {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         if(dataSnapshot.hasChild(uid)){
-                            uploadButton.setText("Submited...");
+                            uploadButton.setText("Submitted...");
                         }else{
                             uploadButton.setEnabled(true);
                             uploadButton.setText("Upload");
@@ -73,31 +73,32 @@ public class ApplyActivity extends AppCompatActivity {
     }
 
     public void upload(View view) {
-        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-        intent.setType("file/*");
-        startActivityForResult(intent, 1);
+        Intent intent = new Intent();
+        intent.setType("application/pdf");
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(Intent.createChooser(intent, "Select Pdf"), 1);
 
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode==1){
-                final ProgressDialog progressDialog=new ProgressDialog(this);
+        if(requestCode==1 && data != null && data.getData() != null){
+                final ProgressDialog progressDialog = new ProgressDialog(this);
                 progressDialog.setTitle("please wait");
                 progressDialog.setMessage("Please wait while we are uploading your document..");
                 progressDialog.setCanceledOnTouchOutside(false);
                 progressDialog.setCancelable(false);
                 progressDialog.show();
-                final String sub=subList.getSelectedItem().toString();
+                final String sub = subList.getSelectedItem().toString();
                 uploadButton.setEnabled(false);
                 uploadButton.setText("Please Wait");
-                Uri uri=data.getData();
-                StorageReference pdfRef=FirebaseStorage.getInstance().getReference().child(uid+"_"+sub+".pdf");
+                Uri uri = data.getData();
+                StorageReference pdfRef = FirebaseStorage.getInstance().getReference().child(uid + "_" + sub + ".pdf");
                 pdfRef.putFile(uri).addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        Toast.makeText(ApplyActivity.this,e.getMessage(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(ApplyActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
                         uploadButton.setText("Upload");
                         progressDialog.dismiss();
                         uploadButton.setEnabled(true);
@@ -105,14 +106,13 @@ public class ApplyActivity extends AppCompatActivity {
                 }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                     @Override
                     public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                        String url=taskSnapshot.getDownloadUrl().toString();
+                        String url = taskSnapshot.getDownloadUrl().toString();
                         FirebaseDatabase.getInstance().getReference().child(sub).child(uid).child("url").setValue(url);
                         Toast.makeText(ApplyActivity.this, "CV Successfully submitted..", Toast.LENGTH_SHORT).show();
                         progressDialog.dismiss();
                         finish();
                     }
                 });
-
 
         }
     }
