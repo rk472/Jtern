@@ -1,9 +1,11 @@
 package com.smarttersstudio.jtern;
 
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.support.annotation.NonNull;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -36,7 +38,7 @@ public class ApplyActivity extends AppCompatActivity {
         subList=findViewById(R.id.sub_list);
         uploadButton=findViewById(R.id.upload_button);
         uploadButton.setEnabled(false);
-        uploadButton.setText("please wait...");
+        uploadButton.setText("Please Wait...");
         mAuth=FirebaseAuth.getInstance();
         uid=mAuth.getCurrentUser().getUid();
         subList.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -54,32 +56,34 @@ public class ApplyActivity extends AppCompatActivity {
                             uploadButton.setText("Submitted...");
                         }else{
                             uploadButton.setEnabled(true);
-                            uploadButton.setText("Upload");
+                            uploadButton.setText("Upload CV Now");
                         }
                     }
-
                     @Override
                     public void onCancelled(DatabaseError databaseError) {
-
                     }
                 });
             }
-
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
 
             }
         });
     }
-
     public void upload(View view) {
-        Intent intent = new Intent();
-        intent.setType("application/pdf");
-        intent.setAction(Intent.ACTION_GET_CONTENT);
-        startActivityForResult(Intent.createChooser(intent, "Select Pdf"), 1);
-
+        new AlertDialog.Builder(this)
+                .setTitle("Agreement")
+                .setMessage("Only upload the CV in PDF format not in other formats. If any vulnerability found(any other file except CV) in uploaded files then your account will be disabled.\nDo you agree to these terms and conditions ?")
+                .setPositiveButton("Yes, Continue", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        Intent intent = new Intent();
+                        intent.setType("application/pdf");
+                        intent.setAction(Intent.ACTION_GET_CONTENT);
+                        startActivityForResult(Intent.createChooser(intent, "Select Pdf"), 1);
+                    }
+                }).setNegativeButton("No, Don't",null).show();
     }
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -99,7 +103,7 @@ public class ApplyActivity extends AppCompatActivity {
                     @Override
                     public void onFailure(@NonNull Exception e) {
                         Toast.makeText(ApplyActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
-                        uploadButton.setText("Upload");
+                        uploadButton.setText("Upload CV Now");
                         progressDialog.dismiss();
                         uploadButton.setEnabled(true);
                     }
@@ -113,7 +117,6 @@ public class ApplyActivity extends AppCompatActivity {
                         finish();
                     }
                 });
-
         }
     }
 }

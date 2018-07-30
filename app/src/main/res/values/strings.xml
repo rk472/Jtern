@@ -5,6 +5,8 @@
     <string name="point3">As a college student I know the importance of a strong resume. Without a solid resume it can be tougher to be considered for a position. And how can you have a strong resume without any experience? Internships are key to building experience as a student or recent graduate. Employers are much more likely to hire someone with internships and work experience rather than someone with a generic resume, lacking experience.</string>
     <string name="point4">As an intern you\'ll become a master of time management. When you\'re working in a fast paced professional environment you need to know every minute counts. Time management is vital in every circumstance whether you\'re attending meetings, finishing tasks on deadlines, making phone calls, picking up your boss\' dry cleaning or walking their dog (just kidding about those last two).</string>
     <string name="point5">Internships provide you with the building blocks you need for your future. Many internship opportunities help set the foundation for your career. It is important that you choose you internships based on your interests and career prospects. As an intern you have the opportunity to get your foot in the door with a company. Keep in mind, employers often use internships as a recruitment tool to test out future employees and in many cases, companies hire interns after graduation.</string>
+    <string name="alert">Alert !!!</string>
+    <string name="alert_text">You have revoked our policies for which you will not be able to view your account or upload any files.\nIf you think we are mistaken contact our Admin for regaining access to your account.</string>
     <string-array name="sub">
         <item>Core Java</item>
         <item>Adv Java</item>

@@ -1,5 +1,6 @@
 package com.smarttersstudio.jtern;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -16,6 +17,11 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class LoginActivity extends AppCompatActivity {
     private EditText emailText,passText;
@@ -87,9 +93,35 @@ public class LoginActivity extends AppCompatActivity {
         }).addOnSuccessListener(new OnSuccessListener<AuthResult>() {
             @Override
             public void onSuccess(AuthResult authResult) {
-                Intent i=new Intent(LoginActivity.this,HomeActivity.class);
-                startActivity(i);
-                finish();
+                final ProgressDialog pd = new ProgressDialog(LoginActivity.this);
+                pd.setTitle("Please Wait");
+                pd.setMessage("Checking Your Eligibility Status ... ");
+                pd.setCanceledOnTouchOutside(false);
+                pd.setCancelable(false);
+                pd.show();
+                final DatabaseReference dRef = FirebaseDatabase.getInstance().getReference().child("users").child(mAuth.getCurrentUser().getUid());
+                dRef.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        String status = dataSnapshot.child("status").getValue().toString();
+                        if(status.equals("none")){
+                            pd.dismiss();
+                            Intent i=new Intent(LoginActivity.this,HomeActivity.class);
+                            startActivity(i);
+                            dRef.removeEventListener(this);
+                            finish();
+                        }else{
+                            pd.dismiss();
+                            Intent i=new Intent(LoginActivity.this,VulnerableActivity.class);
+                            startActivity(i);
+                            dRef.removeEventListener(this);
+                            finish();
+                        }
+                    }
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+                    }
+                });
             }
         });
 

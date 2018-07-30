@@ -15,6 +15,8 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -42,19 +44,15 @@ public class RegisterActivity extends AppCompatActivity {
         nameText.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
             }
-
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 if(TextUtils.isEmpty(s))  n=0;  else n=1;
                 if(n==1 && ph==1 && pa==1 && e==1) registerButton.setEnabled(true);
                 else                               registerButton.setEnabled(false);
             }
-
             @Override
             public void afterTextChanged(Editable s) {
-
             }
         });
         emailText.addTextChangedListener(new TextWatcher() {
@@ -62,57 +60,45 @@ public class RegisterActivity extends AppCompatActivity {
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
             }
-
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 if(TextUtils.isEmpty(s))  e=0;  else e=1;
                 if(n==1 && ph==1 && pa==1 && e==1) registerButton.setEnabled(true);
                 else                               registerButton.setEnabled(false);
             }
-
             @Override
             public void afterTextChanged(Editable s) {
-
             }
         });
         passText.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
             }
-
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 if(TextUtils.isEmpty(s))  pa=0;  else pa=1;
                 if(n==1 && ph==1 && pa==1 && e==1) registerButton.setEnabled(true);
                 else                               registerButton.setEnabled(false);
             }
-
             @Override
             public void afterTextChanged(Editable s) {
-
             }
         });
         phoneText.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
             }
-
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 if(TextUtils.isEmpty(s))  ph=0;  else ph=1;
                 if(n==1 && ph==1 && pa==1 && e==1) registerButton.setEnabled(true);
                 else                               registerButton.setEnabled(false);
             }
-
             @Override
             public void afterTextChanged(Editable s) {
-
             }
         });
     }
-
     public void register(View view) {
         registerButton.setEnabled(false);
         registerButton.setText("please Wait...");
@@ -150,6 +136,5 @@ public class RegisterActivity extends AppCompatActivity {
                 registerButton.setEnabled(true);
             }
         });
-
     }
 }

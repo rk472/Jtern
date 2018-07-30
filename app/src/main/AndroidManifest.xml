@@ -30,7 +30,13 @@
         <activity
             android:name=".ApplyActivity"
             android:label="Apply Now" />
+        <activity android:name=".VulnerableActivity"
+            android:theme="@style/NoBar"
+            ></activity>
 
+        <meta-data
+            android:name="preloaded_fonts"
+            android:resource="@array/preloaded_fonts" />
     </application>
 
 </manifest>
